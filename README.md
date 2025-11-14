@@ -57,12 +57,52 @@ project-config --description "我的项目" --tags python,web,api
 project-config --list
 ```
 
+### config-manager - 管理云端配置
+
+#### 图形界面版本（推荐）✨
+
+```powershell
+# 打开图形界面
+config-manager-gui
+```
+
+图形界面功能：
+- 📋 左侧显示所有配置组列表
+- 📊 右侧显示选中配置组的配置项表格
+- ➕ 添加配置组/配置项
+- ✏️ 编辑配置项（双击或点击编辑按钮）
+- 🗑️ 删除配置项
+- 🔄 刷新数据
+
+#### 命令行版本
+
+```powershell
+# 添加配置组
+config-manager add-group --name my_api --category api --description "我的 API 配置"
+
+# 添加配置项
+config-manager add-item --group my_api --key API_KEY --value "your-key" --secret
+
+# 更新配置项
+config-manager update-item --group my_api --key API_KEY --value "new-key"
+
+# 删除配置项
+config-manager delete-item --group my_api --key API_KEY
+
+# 列出所有配置组
+config-manager list-groups
+
+# 列出配置组的所有配置项
+config-manager list-items --group my_api
+```
+
 ## 📁 项目结构
 
 ```
 cloud-config-tools/
 ├── cloud_config_reader.py    # 配置导出脚本（cloud-config）
 ├── project_config.py         # 项目信息脚本（project-config）
+├── config_manager.py         # 配置管理脚本（config-manager）
 ├── cloud_config_schema.sql   # 数据库表结构
 ├── 一键安装.bat              # Windows 安装脚本
 ├── 一键安装.ps1              # PowerShell 安装脚本

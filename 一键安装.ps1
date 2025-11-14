@@ -71,6 +71,36 @@ python "%~dp0project_config.py" %*
 $projectConfigBat | Out-File -FilePath "$toolsDir\project-config.bat" -Encoding ASCII -NoNewline
 Write-Host "✅ 已创建 project-config.bat" -ForegroundColor Green
 
+# 复制 config_manager.py
+$configManagerFile = Join-Path $PSScriptRoot "config_manager.py"
+if (Test-Path $configManagerFile) {
+    Copy-Item $configManagerFile "$toolsDir\config_manager.py" -Force
+    Write-Host "✅ 已复制 config_manager.py" -ForegroundColor Green
+}
+
+# 创建 config-manager.bat
+$configManagerBat = @"
+@echo off
+python "%~dp0config_manager.py" %*
+"@
+$configManagerBat | Out-File -FilePath "$toolsDir\config-manager.bat" -Encoding ASCII -NoNewline
+Write-Host "✅ 已创建 config-manager.bat" -ForegroundColor Green
+
+# 复制 config_manager_gui.py
+$configManagerGuiFile = Join-Path $PSScriptRoot "config_manager_gui.py"
+if (Test-Path $configManagerGuiFile) {
+    Copy-Item $configManagerGuiFile "$toolsDir\config_manager_gui.py" -Force
+    Write-Host "✅ 已复制 config_manager_gui.py" -ForegroundColor Green
+}
+
+# 创建 config-manager-gui.bat
+$configManagerGuiBat = @"
+@echo off
+python "%~dp0config_manager_gui.py"
+"@
+$configManagerGuiBat | Out-File -FilePath "$toolsDir\config-manager-gui.bat" -Encoding ASCII -NoNewline
+Write-Host "✅ 已创建 config-manager-gui.bat" -ForegroundColor Green
+
 # 配置 PATH
 Write-Host ""
 Write-Host "[4/4] 配置 PATH 环境变量..." -ForegroundColor Yellow
@@ -98,10 +128,14 @@ Write-Host "1. 请重启终端（关闭并重新打开）" -ForegroundColor Whit
 Write-Host "2. 重启后可以使用以下命令:" -ForegroundColor White
 Write-Host "   cloud-config          - 导出云端配置" -ForegroundColor Cyan
 Write-Host "   project-config        - 保存项目信息" -ForegroundColor Cyan
+Write-Host "   config-manager        - 管理云端配置（命令行）" -ForegroundColor Cyan
+Write-Host "   config-manager-gui    - 管理云端配置（图形界面）✨" -ForegroundColor Green
 Write-Host ""
 Write-Host "如果不想重启，可以临时使用:" -ForegroundColor Yellow
 Write-Host "  & `"$toolsDir\cloud-config.bat`"" -ForegroundColor White
 Write-Host "  & `"$toolsDir\project-config.bat`"" -ForegroundColor White
+Write-Host "  & `"$toolsDir\config-manager.bat`"" -ForegroundColor White
+Write-Host "  & `"$toolsDir\config-manager-gui.bat`"" -ForegroundColor White
 Write-Host ""
 Read-Host "按 Enter 退出"
 

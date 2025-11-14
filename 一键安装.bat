@@ -61,6 +61,32 @@ echo python "%%~dp0project_config.py" %%*
 ) > "%TOOLS_DIR%\project-config.bat"
 echo ✅ 已创建 project-config.bat
 
+REM 复制 config_manager.py
+if exist "config_manager.py" (
+    copy "config_manager.py" "%TOOLS_DIR%\" >nul
+    echo ✅ 已复制 config_manager.py
+)
+
+REM 创建 config-manager.bat
+(
+echo @echo off
+echo python "%%~dp0config_manager.py" %%*
+) > "%TOOLS_DIR%\config-manager.bat"
+echo ✅ 已创建 config-manager.bat
+
+REM 复制 config_manager_gui.py
+if exist "config_manager_gui.py" (
+    copy "config_manager_gui.py" "%TOOLS_DIR%\" >nul
+    echo ✅ 已复制 config_manager_gui.py
+)
+
+REM 创建 config-manager-gui.bat
+(
+echo @echo off
+echo python "%%~dp0config_manager_gui.py"
+) > "%TOOLS_DIR%\config-manager-gui.bat"
+echo ✅ 已创建 config-manager-gui.bat
+
 echo.
 echo [4/4] 配置 PATH 环境变量...
 powershell -Command "$currentPath = [Environment]::GetEnvironmentVariable('Path', 'User'); if ($currentPath -notlike '*%TOOLS_DIR%*') { [Environment]::SetEnvironmentVariable('Path', $currentPath + ';%TOOLS_DIR%', 'User'); Write-Host '✅ PATH 已配置' } else { Write-Host '✅ PATH 已包含工具目录' }"
@@ -75,10 +101,14 @@ echo 1. 请重启终端（关闭并重新打开）
 echo 2. 重启后可以使用以下命令:
 echo    cloud-config          - 导出云端配置
 echo    project-config        - 保存项目信息
+echo    config-manager        - 管理云端配置（命令行）
+echo    config-manager-gui    - 管理云端配置（图形界面）✨
 echo.
 echo 如果不想重启，可以临时使用:
 echo   %TOOLS_DIR%\cloud-config.bat
 echo   %TOOLS_DIR%\project-config.bat
+echo   %TOOLS_DIR%\config-manager.bat
+echo   %TOOLS_DIR%\config-manager-gui.bat
 echo.
 pause
 
