@@ -314,7 +314,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="配置管理工具 - 管理 Supabase 中的配置",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
+        epilog=r"""
 示例:
   # 添加配置组
   config-manager add-group --name my_api --category api --description "我的 API 配置"

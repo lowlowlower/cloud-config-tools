@@ -281,7 +281,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="项目信息配置工具 - 保存项目信息到 Supabase",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
+        epilog=r"""
 示例:
   # 保存当前项目信息
   project-config
