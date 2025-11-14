@@ -48,6 +48,19 @@ echo python "%%~dp0cloud_config_reader.py" %%*
 ) > "%TOOLS_DIR%\cloud-config.bat"
 echo ✅ 已创建 cloud-config.bat
 
+REM 复制 project_config.py
+if exist "project_config.py" (
+    copy "project_config.py" "%TOOLS_DIR%\" >nul
+    echo ✅ 已复制 project_config.py
+)
+
+REM 创建 project-config.bat
+(
+echo @echo off
+echo python "%%~dp0project_config.py" %%*
+) > "%TOOLS_DIR%\project-config.bat"
+echo ✅ 已创建 project-config.bat
+
 echo.
 echo [4/4] 配置 PATH 环境变量...
 powershell -Command "$currentPath = [Environment]::GetEnvironmentVariable('Path', 'User'); if ($currentPath -notlike '*%TOOLS_DIR%*') { [Environment]::SetEnvironmentVariable('Path', $currentPath + ';%TOOLS_DIR%', 'User'); Write-Host '✅ PATH 已配置' } else { Write-Host '✅ PATH 已包含工具目录' }"
@@ -59,10 +72,13 @@ echo ========================================
 echo.
 echo ⚠️ 重要提示:
 echo 1. 请重启终端（关闭并重新打开）
-echo 2. 重启后运行: cloud-config
+echo 2. 重启后可以使用以下命令:
+echo    cloud-config          - 导出云端配置
+echo    project-config        - 保存项目信息
 echo.
 echo 如果不想重启，可以临时使用:
 echo   %TOOLS_DIR%\cloud-config.bat
+echo   %TOOLS_DIR%\project-config.bat
 echo.
 pause
 

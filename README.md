@@ -28,6 +28,8 @@
 
 ## 📋 使用方法
 
+### cloud-config - 导出云端配置
+
 ```powershell
 # 导出所有配置为 config.json
 cloud-config
@@ -39,11 +41,28 @@ cloud-config --output my_config.json
 cloud-config --group path_config
 ```
 
+### project-config - 保存项目信息
+
+```powershell
+# 保存当前项目信息到数据库
+project-config
+
+# 保存指定项目
+project-config --path D:\github\my-project
+
+# 添加描述和标签
+project-config --description "我的项目" --tags python,web,api
+
+# 列出所有项目
+project-config --list
+```
+
 ## 📁 项目结构
 
 ```
 cloud-config-tools/
-├── cloud_config_reader.py    # 核心脚本
+├── cloud_config_reader.py    # 配置导出脚本（cloud-config）
+├── project_config.py         # 项目信息脚本（project-config）
 ├── cloud_config_schema.sql   # 数据库表结构
 ├── 一键安装.bat              # Windows 安装脚本
 ├── 一键安装.ps1              # PowerShell 安装脚本

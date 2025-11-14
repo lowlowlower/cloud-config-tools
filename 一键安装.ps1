@@ -56,6 +56,21 @@ python "%~dp0cloud_config_reader.py" %*
 $batContent | Out-File -FilePath "$toolsDir\cloud-config.bat" -Encoding ASCII -NoNewline
 Write-Host "✅ 已创建 cloud-config.bat" -ForegroundColor Green
 
+# 复制 project_config.py
+$projectConfigFile = Join-Path $PSScriptRoot "project_config.py"
+if (Test-Path $projectConfigFile) {
+    Copy-Item $projectConfigFile "$toolsDir\project_config.py" -Force
+    Write-Host "✅ 已复制 project_config.py" -ForegroundColor Green
+}
+
+# 创建 project-config.bat
+$projectConfigBat = @"
+@echo off
+python "%~dp0project_config.py" %*
+"@
+$projectConfigBat | Out-File -FilePath "$toolsDir\project-config.bat" -Encoding ASCII -NoNewline
+Write-Host "✅ 已创建 project-config.bat" -ForegroundColor Green
+
 # 配置 PATH
 Write-Host ""
 Write-Host "[4/4] 配置 PATH 环境变量..." -ForegroundColor Yellow
@@ -80,10 +95,13 @@ Write-Host "工具目录: $toolsDir" -ForegroundColor Yellow
 Write-Host ""
 Write-Host "⚠️ 重要提示:" -ForegroundColor Yellow
 Write-Host "1. 请重启终端（关闭并重新打开）" -ForegroundColor White
-Write-Host "2. 重启后运行: cloud-config" -ForegroundColor White
+Write-Host "2. 重启后可以使用以下命令:" -ForegroundColor White
+Write-Host "   cloud-config          - 导出云端配置" -ForegroundColor Cyan
+Write-Host "   project-config        - 保存项目信息" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "如果不想重启，可以临时使用:" -ForegroundColor Yellow
 Write-Host "  & `"$toolsDir\cloud-config.bat`"" -ForegroundColor White
+Write-Host "  & `"$toolsDir\project-config.bat`"" -ForegroundColor White
 Write-Host ""
 Read-Host "按 Enter 退出"
 
